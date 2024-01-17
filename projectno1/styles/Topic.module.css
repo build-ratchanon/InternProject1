@@ -1,0 +1,16 @@
+.Topic{
+    margin-bottom: 24px;
+}
+
+.Text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 1.725rem;
+    line-height: 1.235;
+    letter-spacing: 0.00735em;
+    color: inherit;
+}
