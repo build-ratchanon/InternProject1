@@ -1,8 +1,4 @@
-body{
-    background: rgb(248, 248, 248);
-}
-
-/* header{
+.Nav{
     margin: 0px;
     padding: 10px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
@@ -13,8 +9,6 @@ body{
     background: rgb(25, 118, 210);
     color: aliceblue;
     
-} */
-
-.FormBlock{
-    margin: auto;
+    position: fixed;
+    width: 100%;
 }

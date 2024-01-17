@@ -1,5 +1,7 @@
 .Topic{
+    margin-top: 50px;
     margin-bottom: 24px;
+    justify-items: center;
 }
 
 .Text{

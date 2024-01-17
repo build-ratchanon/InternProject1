@@ -1,7 +1,10 @@
+import styled from "@/styles/NavBar.module.css"
+import { Grid } from "@mui/material"
+
 export default function NavBar(){
     return (
         <header>
-            <div>User profile management System</div>
+            <Grid className={styled.Nav}>User profile management System</Grid>
         </header>
     )
 }
