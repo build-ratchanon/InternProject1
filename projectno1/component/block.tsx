@@ -12,7 +12,7 @@ import { StatusSelect } from './select';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import styled from "@/styles/Block.module.css";
-import { Grid, InputLabel, MenuItem, Paper, Select } from '@mui/material';
+import { Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent } from '@mui/material';
 import { Topic } from './topic';
 import Post from './post';
 import { useState } from 'react';
@@ -46,12 +46,9 @@ export default function Block(){
     }
     console.log({hobbys})
 
-    const [status, setStatus] = useState('');
-    console.log({status})
-    const handleStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newStatus = event.target.value as string;
-        setStatus(newStatus);
-    }
+    const [status, setStatus] = React.useState<string>('');
+    console.log(status)
+
     const [Notevalue, setValueNote] = useState("")
 
     return (
@@ -151,16 +148,18 @@ export default function Block(){
                             </Grid>
                         
                             <Grid item xs={12}>
-                                <FormControl fullWidth >
+                                <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Status</InputLabel>
                                     <Select
-                                        value={status}
-                                        label="Status"
-                                        // onChange={handleStatusChange}
+                                    // labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={status}
+                                    label="Status"
+                                    onChange={(event) => setStatus(event.target.value)}
                                     >
-                                    <MenuItem value='Single'>Single</MenuItem>
-                                    <MenuItem value='Marrired'>Married</MenuItem>
-                                    <MenuItem value='Divorce'>Divorce</MenuItem>
+                                    <MenuItem value="Single">Single</MenuItem>
+                                    <MenuItem value="Married">Married</MenuItem>
+                                    <MenuItem value="Divorce">Divorce</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -190,6 +189,7 @@ export default function Block(){
                                             setAcceptPDPA(false)
                                             setGender('Male')
                                             setHobbys([])
+                                            setStatus('')
                                             setValueNote('')
                                             }}
                                     >

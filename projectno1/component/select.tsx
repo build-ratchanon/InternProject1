@@ -7,7 +7,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Grid } from '@mui/material';
 
 export function StatusSelect() {
-  const [ststus, setStatus] = React.useState('');
+  const [status, setStatus] = React.useState('');
 
   const handleStatusChange = (event: SelectChangeEvent) => {
     setStatus(event.target.value as string);
@@ -20,7 +20,7 @@ export function StatusSelect() {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={ststus}
+          value={status}
           label="Status"
           onChange={handleStatusChange}
         >
