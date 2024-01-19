@@ -12,7 +12,7 @@ import { StatusSelect } from './select';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import styled from "@/styles/Block.module.css";
-import { Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent } from '@mui/material';
+import { Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, alertClasses } from '@mui/material';
 import { Topic } from './topic';
 import Post from './post';
 import { useState } from 'react';
@@ -69,7 +69,7 @@ export default function Block(){
             setHobbys(hobbysValue.filter((hobbysValue) => hobbysValue !== event.target.value))
         }
     }
-    // console.log({hobbys})
+    // console.log({hobbysValue})
 
     const [statusValue, setStatus] = React.useState("");
     // console.log(status)
@@ -79,38 +79,37 @@ export default function Block(){
 
     const [Notevalue, setValueNote] = useState("")
 
-    const [allvalue, setAllValue] = useState({
-        INITValue: {
-            name: Namevalue,
-            lastName: Lnamevalue,
-            email: Emailvalue,
-            pdpa: acceptPDPA,
-            gender: genderValue,
-            hobby: hobbysValue,
-            status: statusValue,
-            note: Notevalue,
-        }
-    })
+    const [allValue, setAllValue] = useState<detailType[]>([])
+    
+    const addValue = () => {
+        const newAllValue = {name: Namevalue, lastName: Lnamevalue, email: Emailvalue, pdpa: acceptPDPA, gender: genderValue, hobby: hobbysValue, status: statusValue, note: Notevalue}
+        setAllValue([...allValue, newAllValue])
+        console.log(newAllValue)
+    }
 
+    const [InputField, setInputField] = useState([{ value: ""}])
 
     return (
         <Grid container spacing={3}>
 
             <Grid item xs={12} md={5}>
                 <Topic/>
+                {/* <pre>{JSON.stringify(allValue, undefined, 2)}</pre> */}
                 <Box
-                    // onSubmit={handleSubmit}
                     component="form"
                     noValidate
                     sx={{ width: 400, maxWidth: '100%',}}
-                    // onSubmit={onSummit}
                 >
                     <Paper className={styled.Paper}>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
                                 <TextField
-                                    onChange={(newNameValue) => {setValueName(newNameValue.target.value);}}
                                     value={Namevalue}
+                                    onChange={(newNameValue) => {setValueName(newNameValue.target.value);}}
+                                    
+                                    // value={allValue.name}
+                                    // onChange={handleChange}
+                                    // onChange={(e) => {setAllValue(e.target.value)}}
                                     // defaultValue={Namevalue}
                                     name='name' id="Name" label="Name"
                                 />
@@ -119,21 +118,26 @@ export default function Block(){
                             <Grid item xs={6}>
                                 <TextField 
                                     onChange={(newLNameValue) => {setValueLname(newLNameValue.target.value);}}
+                                    value={Lnamevalue}
+
+                                    // value={allValue.lastName}
                                     // onChange={handleChange}
                                     // defaultValue={Lnamevalue}
-                                    value={Lnamevalue}
-                                    name='lastname' id="Lastname" label="Lastname"
+                                    name='lastName' id="LastName" label="Lastname"
                                 /> 
                             </Grid>
 
                             <Grid item xs={12}>
                                 <TextField 
-                                onChange={(newEmailValue) => {setValueEmail(newEmailValue.target.value);}}
-                                // onChange={handleChange}
-                                // defaultValue={Emailvalue}
-                                value={Emailvalue}
-                                fullWidth 
-                                name='email' id="Email" label="Email"/>
+                                    value={Emailvalue}
+                                    onChange={(newEmailValue) => {setValueEmail(newEmailValue.target.value);}}
+                                    
+                                    // value={allValue.email}
+                                    // onChange={handleChange}
+                                    // defaultValue={Emailvalue}
+                                    fullWidth 
+                                    name='email' id="Email" label="Email"
+                                />
                             </Grid>
 
                             <Grid item xs={12}>
@@ -153,8 +157,11 @@ export default function Block(){
                                         aria-labelledby="demo-row-radio-buttons-group-label"
                                         name="row-radio-buttons-group"
                                         defaultValue="Male"
-                                        value={genderValue}
+                                        value={genderValue}               
                                         onChange={(event) => setGender(event.target.value)}
+
+                                        // value={allValue.gender}
+                                        // onChange={handleChange}
                                     >
                                         <FormControlLabel value="Male" control={<Radio name='gender'/>} label="Male" />
                                         <FormControlLabel value="Female" control={<Radio name='gender'/>} label="Female" />
@@ -202,11 +209,15 @@ export default function Block(){
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Status</InputLabel>
                                     <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={statusValue}
-                                    label="Status"
-                                    onChange={handleStatusChange}
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={statusValue}
+                                        label="Status"
+                                        onChange={handleStatusChange}
+
+                                        // value={allValue.status}
+                                        //onChange={handleChange}
+                                        name='status'
                                     >
                                     <MenuItem value='Single'>Single</MenuItem>
                                     <MenuItem value='Marrired'>Married</MenuItem>
@@ -218,10 +229,12 @@ export default function Block(){
                             <Grid item xs={12}>
                                 <TextField 
                                     fullWidth 
+                                    value={Notevalue}
                                     onChange={(newNoteValue) => {setValueNote(newNoteValue.target.value);}}
+                                   
+                                    // value={allValue.note}
                                     // onChange={handleChange}
                                     // defaultValue={Notevalue}
-                                    value={Notevalue}
                                     name='note' id="Note" label="Note"
                                 />
                             </Grid>
@@ -250,20 +263,9 @@ export default function Block(){
                                     </Button>
 
                                     <Button 
-                                        // type='submit'
-                                        variant="contained"
-                                        onClick={()=> {
-                                            // setValueName(Namevalue)
-                                            // setValueLname(Lnamevalue)
-                                            // setValueEmail(Emailvalue)
-                                            // setAcceptPDPA(acceptPDPA)
-                                            // setGender(gender)
-                                            // setHobbys(hobbys)
-                                            // setStatus(status)
-                                            // setValueNote(Notevalue)
-
-
-                                        }}
+                                        type='button'
+                                        variant="contained"                                        
+                                        onClick={()=> {addValue()}}
 
                                     >
                                         Submit
