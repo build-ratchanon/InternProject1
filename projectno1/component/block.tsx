@@ -17,39 +17,81 @@ import { Topic } from './topic';
 import Post from './post';
 import { useState } from 'react';
 import { eventNames } from 'process';
+import { Init } from 'v8';
+
+interface detailType {
+    // count: number,
+    name: string,
+    lastName: string,
+    email: string,
+    pdpa: boolean,
+    gender: string,
+    hobby: string[],
+    status: string,
+    note: string,
+}
+
+const INITValue = {
+    // count: 0,
+    name: '',
+    lastName: '',
+    email: '',
+    pdpa: false,
+    gender: 'Male',
+    hobby: [],
+    status: '',
+    note: '',
+  }
 
 export default function Block(){
 
     const [Namevalue, setValueName] = useState("")
-    const [Emailvalue, setValueEmail] = useState("")
     const [Lnamevalue, setValueLname] = useState("")
+    const [Emailvalue, setValueEmail] = useState("")
 
     const [acceptPDPA, setAcceptPDPA] = useState(false)
-    console.log({acceptPDPA})
+    // console.log({acceptPDPA})
     const handlePDPAChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
         setAcceptPDPA(event.target.checked)
     }
 
-    const [gender, setGender] = useState<string>("Male")
-    console.log({gender})
+    const [genderValue, setGender] = useState<string>("Male")
+    // console.log({gender})
 
-    const [hobbys, setHobbys] = useState<string[]>([])
+    const [hobbysValue, setHobbys] = useState<string[]>([])
     const handleHobbysChange = (event: React.ChangeEvent<HTMLInputElement>) =>{
-        const index = hobbys.indexOf(event.target.value)
+        const index = hobbysValue.indexOf(event.target.value)
 
         if(index === -1){
-            setHobbys([...hobbys, event.target.value])
+            setHobbys([...hobbysValue, event.target.value])
         }
         else{
-            setHobbys(hobbys.filter((hobbys) => hobbys !== event.target.value))
+            setHobbys(hobbysValue.filter((hobbysValue) => hobbysValue !== event.target.value))
         }
     }
-    console.log({hobbys})
+    // console.log({hobbys})
 
-    const [status, setStatus] = React.useState<string>('');
-    console.log(status)
+    const [statusValue, setStatus] = React.useState("");
+    // console.log(status)
+    const handleStatusChange = (event: SelectChangeEvent) => {
+        setStatus(event.target.value as string);
+    };
 
     const [Notevalue, setValueNote] = useState("")
+
+    const [allvalue, setAllValue] = useState({
+        INITValue: {
+            name: Namevalue,
+            lastName: Lnamevalue,
+            email: Emailvalue,
+            pdpa: acceptPDPA,
+            gender: genderValue,
+            hobby: hobbysValue,
+            status: statusValue,
+            note: Notevalue,
+        }
+    })
+
 
     return (
         <Grid container spacing={3}>
@@ -57,6 +99,7 @@ export default function Block(){
             <Grid item xs={12} md={5}>
                 <Topic/>
                 <Box
+                    // onSubmit={handleSubmit}
                     component="form"
                     noValidate
                     sx={{ width: 400, maxWidth: '100%',}}
@@ -67,27 +110,30 @@ export default function Block(){
                             <Grid item xs={6}>
                                 <TextField
                                     onChange={(newNameValue) => {setValueName(newNameValue.target.value);}}
-                                    defaultValue={Namevalue}
                                     value={Namevalue}
-                                    className={styled.Name} id="Name" label="Name"
+                                    // defaultValue={Namevalue}
+                                    name='name' id="Name" label="Name"
                                 />
                             </Grid>
 
                             <Grid item xs={6}>
                                 <TextField 
                                     onChange={(newLNameValue) => {setValueLname(newLNameValue.target.value);}}
-                                    defaultValue={Lnamevalue}
+                                    // onChange={handleChange}
+                                    // defaultValue={Lnamevalue}
                                     value={Lnamevalue}
-                                    className={styled.Name} id="Lastname" label="Lastname"
+                                    name='lastname' id="Lastname" label="Lastname"
                                 /> 
                             </Grid>
 
                             <Grid item xs={12}>
                                 <TextField 
                                 onChange={(newEmailValue) => {setValueEmail(newEmailValue.target.value);}}
-                                defaultValue={Emailvalue}
+                                // onChange={handleChange}
+                                // defaultValue={Emailvalue}
                                 value={Emailvalue}
-                                fullWidth className={styled.Email} id="Email" label="Email"/>
+                                fullWidth 
+                                name='email' id="Email" label="Email"/>
                             </Grid>
 
                             <Grid item xs={12}>
@@ -95,6 +141,7 @@ export default function Block(){
                                     control={<Checkbox checked={acceptPDPA} onChange={handlePDPAChange} />} 
                                     label="Confirm PDPA" 
                                     value={'ConfirmPDPA'}
+                                    name='pdpa'
                                 />
                             </Grid>
 
@@ -106,12 +153,12 @@ export default function Block(){
                                         aria-labelledby="demo-row-radio-buttons-group-label"
                                         name="row-radio-buttons-group"
                                         defaultValue="Male"
-                                        value={gender}
+                                        value={genderValue}
                                         onChange={(event) => setGender(event.target.value)}
                                     >
-                                        <FormControlLabel value="Male" control={<Radio />} label="Male" />
-                                        <FormControlLabel value="Female" control={<Radio />} label="Female" />
-                                        <FormControlLabel value="Etc" control={<Radio />} label="Etc" />
+                                        <FormControlLabel value="Male" control={<Radio name='gender'/>} label="Male" />
+                                        <FormControlLabel value="Female" control={<Radio name='gender'/>} label="Female" />
+                                        <FormControlLabel value="Etc" control={<Radio name='gender'/>} label="Etc" />
                                     </RadioGroup>
                                 </FormControl>
                             </Grid>
@@ -124,24 +171,28 @@ export default function Block(){
                                         aria-labelledby="demo-row-radio-buttons-group-label"
                                     >
                                         <FormControlLabel 
+                                            name='game'
                                             label="Game" 
                                             value={'Game'}
-                                            control={<Checkbox checked={hobbys.includes('Game')}  onChange={handleHobbysChange}/>}   
+                                            control={<Checkbox checked={hobbysValue.includes('Game')}  onChange={handleHobbysChange}/>}   
                                         />
                                         <FormControlLabel 
+                                            name='music'
                                             label="Music"   
                                             value={'Music'}
-                                            control={<Checkbox checked={hobbys.includes('Music')}  onChange={handleHobbysChange}/>} 
+                                            control={<Checkbox checked={hobbysValue.includes('Music')}  onChange={handleHobbysChange}/>} 
                                         />
                                         <FormControlLabel
+                                            name='craft'
                                             label="Craft" 
                                             value={'Craft'} 
-                                            control={<Checkbox checked={hobbys.includes('Craft')}  onChange={handleHobbysChange}/>} 
+                                            control={<Checkbox checked={hobbysValue.includes('Craft')}  onChange={handleHobbysChange}/>} 
                                         />
                                         <FormControlLabel 
+                                            name='reading'
                                             label="Reading" 
                                             value={'Reading'}
-                                            control={<Checkbox checked={hobbys.includes('Reading')}  onChange={handleHobbysChange}/>} 
+                                            control={<Checkbox checked={hobbysValue.includes('Reading')}  onChange={handleHobbysChange}/>} 
                                         />
                                     </FormGroup>
                                 </FormControl>
@@ -151,15 +202,15 @@ export default function Block(){
                                 <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">Status</InputLabel>
                                     <Select
-                                    // labelId="demo-simple-select-label"
+                                    labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={status}
+                                    value={statusValue}
                                     label="Status"
-                                    onChange={(event) => setStatus(event.target.value)}
+                                    onChange={handleStatusChange}
                                     >
-                                    <MenuItem value="Single">Single</MenuItem>
-                                    <MenuItem value="Married">Married</MenuItem>
-                                    <MenuItem value="Divorce">Divorce</MenuItem>
+                                    <MenuItem value='Single'>Single</MenuItem>
+                                    <MenuItem value='Marrired'>Married</MenuItem>
+                                    <MenuItem value='Divorce'>Divorce</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -168,9 +219,10 @@ export default function Block(){
                                 <TextField 
                                     fullWidth 
                                     onChange={(newNoteValue) => {setValueNote(newNoteValue.target.value);}}
-                                    defaultValue={Notevalue}
+                                    // onChange={handleChange}
+                                    // defaultValue={Notevalue}
                                     value={Notevalue}
-                                    id="Note" label="Note"
+                                    name='note' id="Note" label="Note"
                                 />
                             </Grid>
                             
@@ -181,6 +233,7 @@ export default function Block(){
                                     justifyContent={'end'}
                                 >
                                     <Button 
+                                        type='button'
                                         variant="contained"
                                         onClick={() => {
                                             setValueName('')
@@ -191,12 +244,30 @@ export default function Block(){
                                             setHobbys([])
                                             setStatus('')
                                             setValueNote('')
-                                            }}
+                                        }}
                                     >
-                                    Reset
+                                        Reset
                                     </Button>
 
-                                    <Button variant="contained">Summit</Button>
+                                    <Button 
+                                        // type='submit'
+                                        variant="contained"
+                                        onClick={()=> {
+                                            // setValueName(Namevalue)
+                                            // setValueLname(Lnamevalue)
+                                            // setValueEmail(Emailvalue)
+                                            // setAcceptPDPA(acceptPDPA)
+                                            // setGender(gender)
+                                            // setHobbys(hobbys)
+                                            // setStatus(status)
+                                            // setValueNote(Notevalue)
+
+
+                                        }}
+
+                                    >
+                                        Submit
+                                    </Button>
                                 </Box>
 
                             </Grid>
