@@ -14,7 +14,7 @@ const Post = ({ Detail, delectValue }: Prop) => {
         <Box paddingTop={3}>
             <Paper sx={{padding: "16px"}}>
                 <Box display={"flex"} justifyContent={"space-between"}>
-                    <Typography variant="h6"> User {Detail.count} </Typography>
+                    <Typography variant="h6"> USER {} </Typography>
                     
                     <IconButton aria-label="delete" onClick={() => {delectValue(Detail.count)}} >
                         <DeleteIcon/>
@@ -26,7 +26,7 @@ const Post = ({ Detail, delectValue }: Prop) => {
                     <Grid item xs={6}> <Typography> Name: {Detail?.name || "-"} {Detail?.lastName}</Typography> </Grid>
                     <Grid item xs={6}> <Typography> Email: {Detail?.email || "-"} </Typography>  </Grid>
                     <Grid item xs={6}> <Typography>  Gender: {Detail?.gender || "-"} </Typography></Grid>
-                    <Grid item xs={6}> <Typography> Hobby: {Detail?.hobby || "-"} </Typography></Grid>
+                    <Grid item xs={6}> <Typography> Hobby: {Detail?.hobby.join(', ') || "-"} </Typography></Grid>
                     <Grid item xs={6}> <Typography> Status: {Detail?.status || "-"} </Typography></Grid>
                     <Grid item xs={6}> <Typography> Note: {Detail?.note || "-"} </Typography></Grid>
 

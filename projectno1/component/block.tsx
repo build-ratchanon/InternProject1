@@ -9,9 +9,10 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Button from '@mui/material/Button';
-import { Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, alertClasses } from '@mui/material';
+import { Grid, IconButton, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, Typography, alertClasses } from '@mui/material';
 import { Topic } from './topic';
 import Post from './post';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 
 export interface detailType {
@@ -254,9 +255,46 @@ export default function Block(){
 
 
             <Grid className="UserPost" item xs={12} md={7}>
-                {allValue.map((detail: detailType, keys: number) => {
+                
+                {allValue.map((detail: detailType, keys: number) => 
+                    <Grid item paddingTop={3}>
+                        {/* <p>User: {keys +1}</p> */}
+                        {/* <Post key={keys} Detail={detail} delectValue={delectValue}/> */}
+
+                        <Paper sx={{padding: "16px"}}>
+                            <Box display={"flex"} justifyContent={"space-between"}>
+                                <Typography variant="h6"> USER {keys +1} </Typography>
+                                
+                                <IconButton aria-label="delete" onClick={() => {delectValue(detail.count)}} >
+                                    <DeleteIcon/>
+                                </IconButton>
+                            </Box>
+                            
+
+                            <Grid container spacing={1} >
+                                <Grid item xs={6}> <Typography> Name: {detail?.name || "-"} {detail?.lastName}</Typography> </Grid>
+                                <Grid item xs={6}> <Typography> Email: {detail?.email || "-"} </Typography>  </Grid>
+                                <Grid item xs={6}> <Typography>  Gender: {detail?.gender || "-"} </Typography></Grid>
+                                <Grid item xs={6}> <Typography> Hobby: {detail?.hobby.join(', ') || "-"} </Typography></Grid>
+                                <Grid item xs={6}> <Typography> Status: {detail?.status || "-"} </Typography></Grid>
+                                <Grid item xs={6}> <Typography> Note: {detail?.note || "-"} </Typography></Grid>
+
+                                <Grid item xs={6}>
+                                    <FormControlLabel disabled control={<Checkbox checked={detail.pdpa}/>} label="Confirm PDPA" />
+                                </Grid>
+
+                            </Grid>
+                            
+                        </Paper>
+                    </Grid>
+                    
+                )}
+                
+                {/* {allValue.map((detail: detailType, keys: number) => {
                     return <Post key={keys} Detail={detail} delectValue={delectValue}/>
-                })}
+                })} */}
+
+                
             </Grid>
         </Grid>
         
