@@ -1,8 +1,7 @@
-import { Button, Checkbox, FormControlLabel, Grid, IconButton, Paper, Typography } from "@mui/material"
+import { Checkbox, FormControlLabel, Grid, IconButton, Paper, Typography } from "@mui/material"
 import { Box } from "@mui/material"
 import { detailType } from "./block"
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Label } from "@mui/icons-material";
 
 interface Prop {
     Detail: detailType
