@@ -41,17 +41,15 @@ export default function Block() {
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
-
   const [pdpa, setPDPA] = useState(false);
-  // console.log({acceptPDPA})
+  
   const handlePDPAChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPDPA(event.target.checked);
+  
   };
-
   const [gender, setGender] = useState<string>("Male");
-  // console.log({gender})
-
   const [hobbys, setHobbys] = useState<string[]>([]);
+  
   const handleHobbysChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const index = hobbys.indexOf(event.target.value);
 
@@ -61,16 +59,14 @@ export default function Block() {
       setHobbys(hobbys.filter((hobbys) => hobbys !== event.target.value));
     }
   };
-  // console.log({hobbys})
 
   const [status, setStatus] = React.useState("");
-  // console.log(status)
+
   const handleStatusChange = (event: SelectChangeEvent) => {
     setStatus(event.target.value as string);
   };
 
   const [note, setNote] = useState("");
-
   const [allValue, setAllValue] = useState<UserDetails[]>([]);
 
   const addValue = (): void => {
@@ -86,8 +82,6 @@ export default function Block() {
       note: note,
     };
     setAllValue([...allValue, newAllValue]);
-
-    console.log(newAllValue);
   };
 
   const delectValue = (detailToDelect: number): void => {
