@@ -43,13 +43,11 @@ export default function Block() {
   const [email, setEmail] = useState("");
 
   const [pdpa, setPdpa] = useState(false);
-  // console.log({acceptPDPA})
   const handlePDPAChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPdpa(event.target.checked);
   };
 
   const [gender, setGender] = useState<string>("Male");
-  // console.log({gender})
 
   const [hobbys, setHobbys] = useState<string[]>([]);
   const handleHobbysChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,10 +59,8 @@ export default function Block() {
       setHobbys(hobbys.filter((hobbys) => hobbys !== event.target.value));
     }
   };
-  // console.log({hobbys})
 
   const [status, setStatus] = React.useState("");
-  // console.log(status)
   const handleStatusChange = (event: SelectChangeEvent) => {
     setStatus(event.target.value as string);
   };
@@ -86,8 +82,6 @@ export default function Block() {
       note: note,
     };
     setAllValue([...allValue, newAllValue]);
-
-    console.log(newAllValue);
   };
 
   const handleDelectValue = (detailToDelect: number): void => {
@@ -108,9 +102,9 @@ export default function Block() {
               <Grid item xs={6}>
                 <TextField
                   value={name}
-                  onChange={(newNameValue) => {
-                    setName(newNameValue.target.value);
-                  }}
+                  onChange={(newNameValue) => 
+                    setName(newNameValue.target.value)
+                  }
                   fullWidth
                   name="name"
                   id="Name"
@@ -120,9 +114,9 @@ export default function Block() {
 
               <Grid item xs={6}>
                 <TextField
-                  onChange={(newLNameValue) => {
-                    setLastName(newLNameValue.target.value);
-                  }}
+                  onChange={(newLNameValue) =>
+                    setLastName(newLNameValue.target.value)
+                  }
                   value={lastName}
                   fullWidth
                   name="lastName"
@@ -134,9 +128,9 @@ export default function Block() {
               <Grid item xs={12}>
                 <TextField
                   value={email}
-                  onChange={(newEmailValue) => {
-                    setEmail(newEmailValue.target.value);
-                  }}
+                  onChange={(newEmailValue) =>
+                    setEmail(newEmailValue.target.value)
+                  }
                   fullWidth
                   name="email"
                   id="Email"
@@ -272,9 +266,9 @@ export default function Block() {
                 <TextField
                   fullWidth
                   value={note}
-                  onChange={(newNoteValue) => {
-                    setNote(newNoteValue.target.value);
-                  }}
+                  onChange={(newNoteValue) =>
+                    setNote(newNoteValue.target.value)
+                  }
                   name="note"
                   id="Note"
                   label="Note"
