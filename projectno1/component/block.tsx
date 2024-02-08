@@ -36,58 +36,55 @@ export interface UserDetails {
 }
 
 export default function Block() {
-  const [index, setIndex] = useState(1);
+  const [userInput, setUserInput] = useState({
+    index: 0,
+    name: "",
+    lastName: "",
+    email: "",
+    pdpa: false,
+    gender: "Male",
+    hobbys: [],
+    status: "",
+    note: "",
+  });
 
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-
-  const [pdpa, setPdpa] = useState(false);
-  const handlePDPAChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPdpa(event.target.checked);
-  };
-
-  const [gender, setGender] = useState<string>("Male");
-
-  const [hobbys, setHobbys] = useState<string[]>([]);
-  const handleHobbysChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const index = hobbys.indexOf(event.target.value);
-
-    if (index === -1) {
-      setHobbys([...hobbys, event.target.value]);
-    } else {
-      setHobbys(hobbys.filter((hobbys) => hobbys !== event.target.value));
-    }
-  };
-
-  const [status, setStatus] = React.useState("");
-  const handleStatusChange = (event: SelectChangeEvent) => {
-    setStatus(event.target.value as string);
-  };
-
-  const [note, setNote] = useState("");
+  const handleReset = (): void => {
+    setUserInput({
+      index: 0,
+      name: "",
+      lastName: "",
+      email: "",
+      pdpa: false,
+      gender: "Male",
+      hobbys: [],
+      status: "",
+      note: "",
+    })
+  }
 
   const [allValue, setAllValue] = useState<UserDetails[]>([]);
 
   const handleAddValue = (): void => {
-    const newAllValue = {
-      id: index,
-      name: name,
-      lastName: lastName,
-      email: email,
-      pdpa: pdpa,
-      gender: gender,
-      hobby: hobbys,
-      status: status,
-      note: note,
+    const newUserInput = {
+      id: userInput.index,
+      name: userInput.name,
+      lastName: userInput.lastName,
+      email: userInput.email,
+      pdpa: userInput.pdpa,
+      gender: userInput.gender,
+      hobby: userInput.hobbys,
+      status: userInput.status,
+      note: userInput.note,
     };
-    setAllValue([...allValue, newAllValue]);
+    userInput.index += 1
+    setAllValue([...allValue, newUserInput]);
+    console.log(userInput)
   };
 
-  const handleDelectValue = (detailToDelect: number): void => {
+  const handleDelectValue = (delectValue: number): void => {
     setAllValue(
       allValue.filter((detail) => {
-        return detail.id != detailToDelect;
+        return detail.id != delectValue;
       })
     );
   };
@@ -101,10 +98,12 @@ export default function Block() {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
-                  value={name}
-                  onChange={(newNameValue) => 
-                    setName(newNameValue.target.value)
-                  }
+                  value={userInput.name}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setUserInput({
+                      ...userInput, name: event.target.value
+                    })
+                  }}
                   fullWidth
                   name="name"
                   id="Name"
@@ -114,10 +113,12 @@ export default function Block() {
 
               <Grid item xs={6}>
                 <TextField
-                  onChange={(newLNameValue) =>
-                    setLastName(newLNameValue.target.value)
-                  }
-                  value={lastName}
+                  value={userInput.lastName}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setUserInput({
+                      ...userInput, lastName: event.target.value
+                    })
+                  }}
                   fullWidth
                   name="lastName"
                   id="LastName"
@@ -127,10 +128,12 @@ export default function Block() {
 
               <Grid item xs={12}>
                 <TextField
-                  value={email}
-                  onChange={(newEmailValue) =>
-                    setEmail(newEmailValue.target.value)
-                  }
+                  value={userInput.email}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setUserInput({
+                      ...userInput, email: event.target.value
+                    })
+                  }}
                   fullWidth
                   name="email"
                   id="Email"
@@ -141,10 +144,17 @@ export default function Block() {
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
-                    <Checkbox checked={pdpa} onChange={handlePDPAChange} />
+                    <Checkbox
+                      checked={userInput.pdpa}
+                      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        setUserInput({
+                          ...userInput, pdpa: event.target.checked
+                        })
+                      }}
+                    />
                   }
                   label="Confirm PDPA"
-                  value={"ConfirmPDPA"}
+                  value={userInput.pdpa}
                   name="pdpa"
                 />
               </Grid>
@@ -162,8 +172,12 @@ export default function Block() {
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
                     defaultValue="Male"
-                    value={gender}
-                    onChange={(event) => setGender(event.target.value)}
+                    value={userInput.gender}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      setUserInput({
+                        ...userInput, gender: event.target.value
+                      })
+                    }}
                   >
                     <FormControlLabel
                       value="Male"
@@ -199,11 +213,18 @@ export default function Block() {
                     <FormControlLabel
                       name="game"
                       label="Game"
-                      value={"Game"}
                       control={
                         <Checkbox
-                          checked={hobbys.includes("Game")}
-                          onChange={handleHobbysChange}
+                          value={"Game"}
+                          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setUserInput({
+                              ...userInput,
+                              hobbys: [
+                                ...userInput.hobbys,
+                                event.target.value as never
+                              ]
+                            })
+                          }}
                         />
                       }
                     />
@@ -213,8 +234,15 @@ export default function Block() {
                       value={"Music"}
                       control={
                         <Checkbox
-                          checked={hobbys.includes("Music")}
-                          onChange={handleHobbysChange}
+                          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setUserInput({
+                              ...userInput,
+                              hobbys: [
+                                ...userInput.hobbys,
+                                event.target.value as never
+                              ]
+                            })
+                          }}
                         />
                       }
                     />
@@ -224,8 +252,15 @@ export default function Block() {
                       value={"Craft"}
                       control={
                         <Checkbox
-                          checked={hobbys.includes("Craft")}
-                          onChange={handleHobbysChange}
+                          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setUserInput({
+                              ...userInput,
+                              hobbys: [
+                                ...userInput.hobbys,
+                                event.target.value as never
+                              ]
+                            })
+                          }}
                         />
                       }
                     />
@@ -235,8 +270,15 @@ export default function Block() {
                       value={"Reading"}
                       control={
                         <Checkbox
-                          checked={hobbys.includes("Reading")}
-                          onChange={handleHobbysChange}
+                          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setUserInput({
+                              ...userInput,
+                              hobbys: [
+                                ...userInput.hobbys,
+                                event.target.value as never
+                              ]
+                            })
+                          }}
                         />
                       }
                     />
@@ -250,9 +292,13 @@ export default function Block() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={status}
+                    value={userInput.status}
                     label="Status"
-                    onChange={handleStatusChange}
+                    onChange={(event: SelectChangeEvent) => {
+                      setUserInput({
+                        ...userInput, status: event.target.value
+                      })
+                    }}
                     name="status"
                   >
                     <MenuItem value="Single">Single</MenuItem>
@@ -265,10 +311,12 @@ export default function Block() {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  value={note}
-                  onChange={(newNoteValue) =>
-                    setNote(newNoteValue.target.value)
-                  }
+                  value={userInput.note}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setUserInput({
+                      ...userInput, note: event.target.value
+                    })
+                  }}
                   name="note"
                   id="Note"
                   label="Note"
@@ -287,14 +335,7 @@ export default function Block() {
                     type="button"
                     variant="contained"
                     onClick={() => {
-                      setName("");
-                      setLastName("");
-                      setEmail("");
-                      setPdpa(false);
-                      setGender("Male");
-                      setHobbys([]);
-                      setStatus("");
-                      setNote("");
+                      handleReset()
                     }}
                   >
                     Reset
@@ -303,9 +344,8 @@ export default function Block() {
                   <Button
                     type="button"
                     variant="contained"
-                    value={index}
+                    value={userInput.index}
                     onClick={() => {
-                      setIndex(index + 1);
                       handleAddValue();
                     }}
                   >
