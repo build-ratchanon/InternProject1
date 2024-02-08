@@ -7,15 +7,15 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { detailType } from "./block";
+import { UserDetails } from "./block";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-interface Prop {
-  Detail: detailType;
-  delectValue(detailToDelect: number): void;
+interface Props { 
+  user: UserDetails;
+  delectValue(index: number): void;
 }
 
-const Post = ({ Detail, delectValue }: Prop) => {
+const Post = ({ user, delectValue }: Props) => {
   return (
     <Box paddingTop={3}>
       <Paper sx={{ padding: "16px" }}>
@@ -25,7 +25,7 @@ const Post = ({ Detail, delectValue }: Prop) => {
           <IconButton
             aria-label="delete"
             onClick={() => {
-              delectValue(Detail.count);
+              delectValue(user.count);
             }}
           >
             <DeleteIcon />
@@ -37,34 +37,34 @@ const Post = ({ Detail, delectValue }: Prop) => {
             {" "}
             <Typography>
               {" "}
-              Name: {Detail?.name || "-"} {Detail?.lastName}
+              Name: {user?.name || "-"} {user?.lastName}
             </Typography>{" "}
           </Grid>
           <Grid item xs={6}>
             {" "}
-            <Typography> Email: {Detail?.email || "-"} </Typography>{" "}
+            <Typography> Email: {user?.email || "-"} </Typography>{" "}
           </Grid>
           <Grid item xs={6}>
             {" "}
-            <Typography> Gender: {Detail?.gender || "-"} </Typography>
+            <Typography> Gender: {user?.gender || "-"} </Typography>
           </Grid>
           <Grid item xs={6}>
             {" "}
-            <Typography> Hobby: {Detail?.hobby.join(", ") || "-"} </Typography>
+            <Typography> Hobby: {user?.hobby.join(", ") || "-"} </Typography>
           </Grid>
           <Grid item xs={6}>
             {" "}
-            <Typography> Status: {Detail?.status || "-"} </Typography>
+            <Typography> Status: {user?.status || "-"} </Typography>
           </Grid>
           <Grid item xs={6}>
             {" "}
-            <Typography> Note: {Detail?.note || "-"} </Typography>
+            <Typography> Note: {user?.note || "-"} </Typography>
           </Grid>
 
           <Grid item xs={6}>
             <FormControlLabel
               disabled
-              control={<Checkbox checked={Detail.pdpa} />}
+              control={<Checkbox checked={user.pdpa} />}
               label="Confirm PDPA"
             />
           </Grid>

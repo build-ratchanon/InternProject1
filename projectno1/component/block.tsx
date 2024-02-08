@@ -23,7 +23,7 @@ import { Topic } from "./topic";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 
-export interface detailType {
+export interface UserDetails {
   count: number;
   name: string;
   lastName: string;
@@ -71,7 +71,7 @@ export default function Block() {
 
   const [Note, setNote] = useState("");
 
-  const [allValue, setAllValue] = useState<detailType[]>([]);
+  const [allValue, setAllValue] = useState<UserDetails[]>([]);
 
   const addValue = (): void => {
     const newAllValue = {
@@ -326,7 +326,7 @@ export default function Block() {
       </Grid>
 
       <Grid className="UserPost" item xs={12} md={7}>
-        {allValue.map((detail: detailType, keys: number) => (
+        {allValue.map((detail: UserDetails, keys: number) => (
           <Grid item paddingTop={3}>
             <Paper sx={{ padding: "16px" }}>
               <Box display={"flex"} justifyContent={"space-between"}>
