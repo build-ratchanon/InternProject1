@@ -39,7 +39,7 @@ export default function Block() {
   const [index, setIndex] = useState(1);
 
   const [name, setName] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 
   const [pdpa, setPDPA] = useState(false);
@@ -73,11 +73,11 @@ export default function Block() {
 
   const [allValue, setAllValue] = useState<UserDetails[]>([]);
 
-  const addValue = (): void => {
+  const handleAddValue = (): void => {
     const newAllValue = {
       id: index,
       name: name,
-      lastName: lastname,
+      lastName: lastName,
       email: email,
       pdpa: pdpa,
       gender: gender,
@@ -90,7 +90,7 @@ export default function Block() {
     console.log(newAllValue);
   };
 
-  const delectValue = (detailToDelect: number): void => {
+  const handleDelectValue = (detailToDelect: number): void => {
     setAllValue(
       allValue.filter((detail) => {
         return detail.id != detailToDelect;
@@ -121,9 +121,9 @@ export default function Block() {
               <Grid item xs={6}>
                 <TextField
                   onChange={(newLNameValue) => {
-                    setLastname(newLNameValue.target.value);
+                    setLastName(newLNameValue.target.value);
                   }}
-                  value={lastname}
+                  value={lastName}
                   fullWidth
                   name="lastName"
                   id="LastName"
@@ -294,7 +294,7 @@ export default function Block() {
                     variant="contained"
                     onClick={() => {
                       setName("");
-                      setLastname("");
+                      setLastName("");
                       setEmail("");
                       setPDPA(false);
                       setGender("Male");
@@ -312,7 +312,7 @@ export default function Block() {
                     value={index}
                     onClick={() => {
                       setIndex(index + 1);
-                      addValue();
+                      handleAddValue();
                     }}
                   >
                     Submit
@@ -334,7 +334,7 @@ export default function Block() {
                 <IconButton
                   aria-label="delete"
                   onClick={() => {
-                    delectValue(detail.id);
+                    handleDelectValue(detail.id);
                   }}
                 >
                   <DeleteIcon />
