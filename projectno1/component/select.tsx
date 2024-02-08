@@ -1,13 +1,15 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Grid } from '@mui/material';
+import * as React from "react";
+import {
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 
 export function StatusSelect() {
-  const [status, setStatus] = React.useState('');
+  const [status, setStatus] = React.useState("");
 
   const handleStatusChange = (event: SelectChangeEvent) => {
     setStatus(event.target.value as string);
@@ -24,9 +26,9 @@ export function StatusSelect() {
           label="Status"
           onChange={handleStatusChange}
         >
-          <MenuItem value='Single'>Single</MenuItem>
-          <MenuItem value='Marrired'>Married</MenuItem>
-          <MenuItem value='Divorce'>Divorce</MenuItem>
+          <MenuItem value="Single">Single</MenuItem>
+          <MenuItem value="Marrired">Married</MenuItem>
+          <MenuItem value="Divorce">Divorce</MenuItem>
         </Select>
       </FormControl>
     </Grid>

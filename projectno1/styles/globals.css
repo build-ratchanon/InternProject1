@@ -2,19 +2,6 @@ body{
     background: rgb(248, 248, 248);
 }
 
-/* header{
-    margin: 0px;
-    padding: 10px;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-size: 2rem;
-    letter-spacing: 0em;
-    color: inherit;
-    text-align: center;
-    background: rgb(25, 118, 210);
-    color: aliceblue;
-    
-} */
-
 .FormBlock{
     margin: auto;
 }
