@@ -42,10 +42,10 @@ export default function Block() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 
-  const [pdpa, setPDPA] = useState(false);
+  const [pdpa, setPdpa] = useState(false);
   // console.log({acceptPDPA})
   const handlePDPAChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPDPA(event.target.checked);
+    setPdpa(event.target.checked);
   };
 
   const [gender, setGender] = useState<string>("Male");
@@ -296,7 +296,7 @@ export default function Block() {
                       setName("");
                       setLastName("");
                       setEmail("");
-                      setPDPA(false);
+                      setPdpa(false);
                       setGender("Male");
                       setHobbys([]);
                       setStatus("");
