@@ -24,7 +24,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 
 export interface UserDetails {
-  count: number;
+  id: number;
   name: string;
   lastName: string;
   email: string;
@@ -36,19 +36,19 @@ export interface UserDetails {
 }
 
 export default function Block() {
-  const [Count, setCount] = useState(1);
+  const [index, setIndex] = useState(1);
 
-  const [Name, setName] = useState("");
-  const [Lastname, setLastname] = useState("");
-  const [Email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
 
-  const [PDPA, setPDPA] = useState(false);
+  const [pdpa, setPDPA] = useState(false);
   // console.log({acceptPDPA})
   const handlePDPAChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPDPA(event.target.checked);
   };
 
-  const [Gender, setGender] = useState<string>("Male");
+  const [gender, setGender] = useState<string>("Male");
   // console.log({gender})
 
   const [hobbys, setHobbys] = useState<string[]>([]);
@@ -63,27 +63,27 @@ export default function Block() {
   };
   // console.log({hobbys})
 
-  const [Status, setStatus] = React.useState("");
+  const [status, setStatus] = React.useState("");
   // console.log(status)
   const handleStatusChange = (event: SelectChangeEvent) => {
     setStatus(event.target.value as string);
   };
 
-  const [Note, setNote] = useState("");
+  const [note, setNote] = useState("");
 
   const [allValue, setAllValue] = useState<UserDetails[]>([]);
 
   const addValue = (): void => {
     const newAllValue = {
-      count: Count,
-      name: Name,
-      lastName: Lastname,
-      email: Email,
-      pdpa: PDPA,
-      gender: Gender,
+      id: index,
+      name: name,
+      lastName: lastname,
+      email: email,
+      pdpa: pdpa,
+      gender: gender,
       hobby: hobbys,
-      status: Status,
-      note: Note,
+      status: status,
+      note: note,
     };
     setAllValue([...allValue, newAllValue]);
 
@@ -93,7 +93,7 @@ export default function Block() {
   const delectValue = (detailToDelect: number): void => {
     setAllValue(
       allValue.filter((detail) => {
-        return detail.count != detailToDelect;
+        return detail.id != detailToDelect;
       })
     );
   };
@@ -107,7 +107,7 @@ export default function Block() {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
-                  value={Name}
+                  value={name}
                   onChange={(newNameValue) => {
                     setName(newNameValue.target.value);
                   }}
@@ -123,7 +123,7 @@ export default function Block() {
                   onChange={(newLNameValue) => {
                     setLastname(newLNameValue.target.value);
                   }}
-                  value={Lastname}
+                  value={lastname}
                   fullWidth
                   name="lastName"
                   id="LastName"
@@ -133,7 +133,7 @@ export default function Block() {
 
               <Grid item xs={12}>
                 <TextField
-                  value={Email}
+                  value={email}
                   onChange={(newEmailValue) => {
                     setEmail(newEmailValue.target.value);
                   }}
@@ -147,7 +147,7 @@ export default function Block() {
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
-                    <Checkbox checked={PDPA} onChange={handlePDPAChange} />
+                    <Checkbox checked={pdpa} onChange={handlePDPAChange} />
                   }
                   label="Confirm PDPA"
                   value={"ConfirmPDPA"}
@@ -168,7 +168,7 @@ export default function Block() {
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
                     defaultValue="Male"
-                    value={Gender}
+                    value={gender}
                     onChange={(event) => setGender(event.target.value)}
                   >
                     <FormControlLabel
@@ -256,7 +256,7 @@ export default function Block() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={Status}
+                    value={status}
                     label="Status"
                     onChange={handleStatusChange}
                     name="status"
@@ -271,7 +271,7 @@ export default function Block() {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  value={Note}
+                  value={note}
                   onChange={(newNoteValue) => {
                     setNote(newNoteValue.target.value);
                   }}
@@ -309,10 +309,9 @@ export default function Block() {
                   <Button
                     type="button"
                     variant="contained"
-                    value={Count}
+                    value={index}
                     onClick={() => {
-                      setCount(Count + 1);
-                      console.log(Count);
+                      setIndex(index + 1);
                       addValue();
                     }}
                   >
@@ -335,7 +334,7 @@ export default function Block() {
                 <IconButton
                   aria-label="delete"
                   onClick={() => {
-                    delectValue(detail.count);
+                    delectValue(detail.id);
                   }}
                 >
                   <DeleteIcon />

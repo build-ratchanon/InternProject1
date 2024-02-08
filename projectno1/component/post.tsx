@@ -25,7 +25,7 @@ const Post = ({ user, delectValue }: Props) => {
           <IconButton
             aria-label="delete"
             onClick={() => {
-              delectValue(user.count);
+              delectValue(user.id);
             }}
           >
             <DeleteIcon />
