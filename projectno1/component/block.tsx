@@ -50,7 +50,7 @@ export default function Block() {
 
   const handleReset = (): void => {
     setUserInput({
-      index: 0,
+      index: userInput.index,
       name: "",
       lastName: "",
       email: "",
@@ -78,7 +78,6 @@ export default function Block() {
     };
     userInput.index += 1
     setAllValue([...allValue, newUserInput]);
-    console.log(userInput)
   };
 
   const handleDelectValue = (delectValue: number): void => {
